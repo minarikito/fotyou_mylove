@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un pedacito de mí ♡ </title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;1,400;1,700&family=Dancing+Script:wght@400;700&family=Pacifico&family=Sacramento&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #240c19, #632c42, #a65e75);
+    color: #fff1f4;
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+}
+
+.window {
+    display: none;
+    min-height: 100vh;
+    padding: 35px 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    animation: appear 1s ease;
+}
+
+.window.active {
+    display: flex;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(42px, 8vw, 65px);
+    font-weight: normal;
+    color: #ffd1dc;
+}
+
+p {
+    font-size: 21px;
+}
+
+/* ==================================
+   VENTANA 1: LA ROSA
+================================== */
+
+.rose-area {
+    position: relative;
+    width: 260px;
+    height: 230px;
+    margin: 15px auto;
+}
+
+.rose {
+    position: absolute;
+    font-size: 100px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    left: 80px;
+    top: 40px;
+    filter: drop-shadow(0 0 15px #ff9bb5);
+    transition: filter .3s;
+}
+
+.rose:active {
+    cursor: grabbing;
+    filter: drop-shadow(0 0 25px #fff);
+}
+
+.message {
+    max-width: 550px;
+    font-size: 25px;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.letter {
+    display: none;
+    width: min(90%, 450px);
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 18px;
+    background: #fff0f3;
+    color: #79364d;
+    box-shadow: 0 0 30px #ff9bb5;
+    animation: appear 1.5s ease;
+}
+
+.letter h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 45px;
+}
+
+.letter p {
+    font-size: 21px;
+    line-height: 1.6;
+}
+
+.letter-heart {
+    font-size: 55px;
+    animation: heartbeat 1.3s infinite;
+}
+
+@keyframes heartbeat {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* ==================================
+   BOTONES
+================================== */
+
+button {
+    border: 1px solid #ffd0dc;
+    background: #b44e70;
+    color: white;
+    padding: 13px 28px;
+    border-radius: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    cursor: pointer;
+    margin: 15px;
+    transition: .3s;
+}
+
+button:hover {
+    background: #f3a5bb;
+    color: #512336;
+    transform: scale(1.06);
+}
+
+/* ==================================
+   VENTANA 2: CORAZÓN 3D
+================================== */
+
+#window2 {
+    overflow: hidden;
+    background: radial-gradient(
+        ellipse at center,
+        #542039 0%,
+        #351323 55%,
+        #190811 100%
+    );
+}
+
+.love-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(35px, 6vw, 55px);
+    margin-bottom: 0;
+}
+
+.love-subtitle {
+    font-size: 19px;
+    color: #ffd0dc;
+    margin-bottom: 10px;
+}
+
+.love-heart {
+    position: relative;
+    width: min(95vw, 850px);
+    height: min(70vh, 600px);
+    min-height: 380px;
+    margin: 10px auto;
+    cursor: grab;
+    touch-action: none;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+.love-heart:active {
+    cursor: grabbing;
+}
+
+.love-heart canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.controls {
+    font-size: 14px;
+    color: #f8bdce;
+    letter-spacing: 2px;
+    margin: 5px;
+}
+
+.love-footer {
+    font-family: 'Great Vibes', cursive;
+    font-size: 30px;
+    color: #ffd1dc;
+}
+
+/* ==================================
+   VENTANA 3: POEMA
+================================== */
+
+.poem {
+    max-width: 700px;
+    padding: 25px;
+    line-height: 1.9;
+    font-size: 22px;
+    font-style: italic;
+    background: #ffffff12;
+    border: 1px solid #ffd0dc55;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #e88ca955;
+}
+
+/* ==================================
+   ANIMACIÓN DE LA FLOR
+================================== */
+
+.garden {
+    position: relative;
+    width: 300px;
+    height: 330px;
+    margin: 35px auto 5px;
+    overflow: hidden;
+}
+
+.sun {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 70px;
+    filter: drop-shadow(0 0 20px #ffd66d);
+    animation: sunGlow 3s infinite alternate;
+}
+
+@keyframes sunGlow {
+    to {
+        filter: drop-shadow(0 0 35px #fff1a0);
+    }
+}
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    background: #587a4b;
+    border-radius: 50%;
+}
+
+.stem {
+    position: absolute;
+    bottom: 15px;
+    left: 147px;
+    width: 7px;
+    height: 0;
+    background: linear-gradient(#8ecb74, #356e43);
+    border-radius: 10px;
+    animation: growStem 4s 1s forwards;
+}
+
+@keyframes growStem {
+    to {
+        height: 170px;
+    }
+}
+
+.leaf {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: #83b96c;
+    border-radius: 100% 0 100% 0;
+    animation: growLeaf 2s 3s forwards;
+}
+
+.leaf.left {
+    left: 100px;
+    bottom: 95px;
+}
+
+.leaf.right {
+    right: 100px;
+    bottom: 125px;
+    transform: rotate(80deg);
+}
+
+@keyframes growLeaf {
+    to {
+        width: 48px;
+        height: 24px;
+    }
+}
+
+.flower {
+    position: absolute;
+    left: 50%;
+    bottom: 178px;
+    transform: translateX(-50%) scale(0);
+    font-size: 0;
+}
+
+@keyframes bloom {
+    to {
+        transform: translateX(-50%) scale(1);
+        font-size: 75px;
+    }
+}
+
+.final-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 38px;
+    color: #ffd1dc;
+    margin-top: 5px;
+}
+
+footer {
+    margin-top: 20px;
+    color: #ffd0dc;
+    opacity: .7;
+    font-size: 15px;
+}
+
+@media(max-width: 600px) {
+    .love-heart {
+        height: 430px;
+        min-height: 350px;
+    }
+
+    .poem {
+        font-size: 19px;
+        padding: 18px;
+    }
+
+    .garden {
+        transform: scale(.9);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================================
+     VENTANA 1
+================================== -->
+
+<section class="window active" id="window1">
+
+    <h1>Un pequeño detalle para ti</h1>
+
+    <div class="rose-area">
+        <div class="rose" id="rose">🌹</div>
+    </div>
+
+    <div class="message">
+        Hola cariño, espero que estés bien,
+        abre esta carta cuando quieras
+        un pedacito de mí. ♡
+    </div>
+
+    <div class="letter" id="letter">
+
+        <h2>Una carta para ti</h2>
+
+        <div class="letter-heart">💗</div>
+
+        <p>
+            Quizá no pueda estar a tu lado en cada momento,
+            pero quería dejarte algo que pudieras abrir
+            cuando necesitaras recordar lo especial
+            que eres para mí.
+        </p>
+
+        <p>
+            Este pequeño rincón está hecho con cariño,
+            pensando en ti.
+        </p>
+
+        <p>Con mucho amor. ♡</p>
+
+        <button onclick="goTo(2)">
+            Abrir mi corazón ♡
+        </button>
+
+    </div>
+
+    <footer>
+        Una pequeña sorpresa hecha para ti.
+    </footer>
+
+</section>
+
+
+<!-- ==================================
+     VENTANA 2
+================================== -->
+
+<section class="window" id="window2">
+
+    <h1 class="love-title">
+        200 maneras de decirte...
+    </h1>
+
+    <p class="love-subtitle">
+        Y aun así, ninguna alcanza para explicar lo que siento. ♡
+    </p>
+
+    <div class="love-heart" id="loveHeart"></div>
+
+    <p class="controls">
+        ARRASTRA PARA GIRAR · USA LA RUEDA PARA ACERCAR
+    </p>
+
+    <p class="love-footer">
+        En cualquier idioma, siempre serás tú. ♡
+    </p>
+
+    <button onclick="goTo(3)">
+        Continuar hacia ti ♡
+    </button>
+
+</section>
+
+
+<!-- ==================================
+     VENTANA 3
+================================== -->
+
+<section class="window" id="window3">
+
+    <h1>Hay algo en ti...</h1>
+
+    <div class="poem">
+
+        Tus ojos parecen guardar pequeños universos,
+        de esos que uno contempla sin querer dejar de mirar.
+        Tienen una luz que no necesita estrellas,
+        porque ellos mismos saben cómo iluminar.
+
+        <br><br>
+
+        Y tu cabello...
+        parece bailar con el viento,
+        como si cada hebra guardara una historia,
+        como si el tiempo se detuviera
+        cuando puedo contemplarlo.
+
+        <br><br>
+
+        No sé cómo explicarlo con palabras,
+        pero hay belleza en cada detalle de ti.
+        En tu mirada, en tu sonrisa,
+        en esa forma tan tuya de existir.
+
+        <br><br>
+
+        Si pudiera regalarte algo,
+        sería la oportunidad de verte
+        con los mismos ojos con los que yo te veo:
+        como alguien verdaderamente especial.
+
+        <br><br>
+
+        Porque entre tantas cosas bonitas del mundo,
+        tú tienes una manera única de florecer.
+
+    </div>
+
+    <div class="garden">
+
+        <div class="sun">☀️</div>
+
+        <div class="stem"></div>
+
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+
+        <div class="flower">🌸</div>
+
+        <div class="ground"></div>
+
+    </div>
+
+    <div class="final-text">
+        Así como esta flor, haces más bonito mi mundo.
+    </div>
+
+    <button onclick="goTo(1)">
+        Volver a leer mi carta ♡
+    </button>
+
+    <footer>
+        Hecho con cariño, para alguien especial.
+    </footer>
+
+</section>
+
+
+<script>
+
+// ======================================
+// CAMBIAR ENTRE VENTANAS
+// ======================================
+
+function goTo(number) {
+
+    document.querySelectorAll('.window').forEach(w => {
+        w.classList.remove('active');
+    });
+
+    document.getElementById('window' + number)
+        .classList.add('active');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+    if(number === 2) {
+
+        setTimeout(() => {
+            initLove3D();
+        }, 100);
+
+    }
+
+    if(number === 3) {
+
+        const flower = document.querySelector('.flower');
+        const stem = document.querySelector('.stem');
+        const leaves = document.querySelectorAll('.leaf');
+
+        flower.style.animation = 'none';
+        stem.style.animation = 'none';
+
+        leaves.forEach(leaf => {
+            leaf.style.animation = 'none';
+        });
+
+        void flower.offsetWidth;
+
+        flower.style.animation = 'bloom 2s 4.5s forwards';
+        stem.style.animation = 'growStem 4s 1s forwards';
+
+        leaves.forEach(leaf => {
+            leaf.style.animation = 'growLeaf 2s 3s forwards';
+        });
+
+    }
+
+}
+
+
+// ======================================
+// ROSA MOVIBLE
+// ======================================
+
+const rose = document.getElementById('rose');
+const area = document.querySelector('.rose-area');
+
+let draggingRose = false;
+let offsetX = 0;
+let offsetY = 0;
+
+rose.addEventListener('pointerdown', (e) => {
+
+    draggingRose = true;
+
+    const rect = rose.getBoundingClientRect();
+
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    rose.setPointerCapture(e.pointerId);
+
+});
+
+rose.addEventListener('pointermove', (e) => {
+
+    if(!draggingRose) return;
+
+    const rect = area.getBoundingClientRect();
+
+    let x = e.clientX - rect.left - offsetX;
+    let y = e.clientY - rect.top - offsetY;
+
+    x = Math.max(
+        0,
+        Math.min(x, area.clientWidth - rose.offsetWidth)
+    );
+
+    y = Math.max(
+        0,
+        Math.min(y, area.clientHeight - rose.offsetHeight)
+    );
+
+    rose.style.left = x + 'px';
+    rose.style.top = y + 'px';
+
+});
+
+rose.addEventListener('pointerup', () => {
+    draggingRose = false;
+});
+
+rose.addEventListener('pointercancel', () => {
+    draggingRose = false;
+});
+
+
+// ======================================
+// CARTA DESPUÉS DE 10 SEGUNDOS
+// ======================================
+
+setTimeout(() => {
+
+    document.getElementById('letter').style.display = 'block';
+
+}, 10000);
+
+
+// ======================================
+// FRASES DE AMOR
+// 50 EXPRESIONES EN DIFERENTES IDIOMAS
+// ======================================
+
+const lovePhrases = [
+
+    "Te amo",
+    "I love you",
+    "Je t'aime",
+    "Ti amo",
+    "Ich liebe dich",
+    "Eu te amo",
+    "愛してる",
+    "사랑해",
+    "Я тебя люблю",
+    "أحبك",
+    "我爱你",
+    "Ik hou van jou",
+    "Jag älskar dig",
+    "Jeg elsker deg",
+    "Jeg elsker dig",
+    "Rakastan sinua",
+    "Te iubesc",
+    "Kocham cię",
+    "Miluji tě",
+    "Я тебе кохаю",
+    "Σε αγαπώ",
+    "Seni seviyorum",
+    "אני אוהב אותך",
+    "मैं तुमसे प्यार करता हूँ",
+    "நான் உன்னை காதலிக்கிறேன்",
+    "Ngiyakuthanda",
+    "Nakupenda",
+    "Aloha wau iā ʻoe",
+    "Mi amas vin",
+    "Volim te",
+    "Ljubim te",
+    "Ik hâld fan dy",
+    "Tá grá agam duit",
+    "Tha gaol agam ort",
+    "T'estimo",
+    "Maite zaitut",
+    "Ek is lief vir jou",
+    "Mwen renmen ou",
+    "Aku cinta kamu",
+    "Saya cinta kamu",
+    "Mahal kita",
+    "Anh yêu em",
+    "Em yêu anh",
+    "Chan rak khun",
+    "Kuv hlub koj",
+    "Ke a go rata",
+    "Ndagukunda",
+    "Wo ai ni",
+    "S'agapo",
+    "Te dua"
+
+];
+
+
+// ======================================
+// TIPOGRAFÍAS
+// ======================================
+
+const loveFonts = [
+
+    "Great Vibes",
+    "Cormorant Garamond",
+    "Playfair Display",
+    "Dancing Script",
+    "Pacifico",
+    "Sacramento"
+
+];
+
+
+// ======================================
+// COLORES DEL CORAZÓN
+// ======================================
+
+const loveColors = [
+
+    "#fff0f5",
+    "#ffc0cb",
+    "#ff8fab",
+    "#ffe0e9",
+    "#ffb6c1",
+    "#f7a8c4"
+
+];
+
+
+// ======================================
+// VARIABLES 3D
+// ======================================
+
+let loveScene;
+let loveCamera;
+let loveRenderer;
+let loveGroup;
+
+let loveAnimationStarted = false;
+
+let targetX = 0.25;
+let targetY = 0;
+
+let isDragging = false;
+
+let previousX = 0;
+let previousY = 0;
+
+
+// ======================================
+// CREAR TEXTURAS DE LOS MENSAJES
+// ======================================
+
+function createLoveTexture(text, font, color) {
+
+    const canvas = document.createElement('canvas');
+
+    canvas.width = 512;
+    canvas.height = 128;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, 512, 128);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    let fontSize = 52;
+
+    ctx.font = `bold ${fontSize}px "${font}"`;
+
+    while(ctx.measureText(text).width > 470 && fontSize > 20) {
+
+        fontSize -= 2;
+
+        ctx.font = `bold ${fontSize}px "${font}"`;
+
+    }
+
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 18;
+
+    ctx.fillStyle = color;
+
+    ctx.fillText(text, 256, 64);
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    texture.needsUpdate = true;
+
+    return texture;
+
+}
+
+
+// ======================================
+// POSICIONES MATEMÁTICAS DEL CORAZÓN
+// ======================================
+
+function getHeartPosition() {
+
+    let x, y;
+
+    do {
+
+        x = Math.random() * 2.6 - 1.3;
+
+        y = Math.random() * 2.5 - 1.1;
+
+    } while (
+
+        Math.pow(x*x + y*y - 1, 3)
+        - x*x*Math.pow(y, 3) > 0
+
+    );
+
+    return {
+        x: x * 2.2,
+        y: y * 2.2
+    };
+
+}
+
+
+// ======================================
+// CONSTRUIR EL CORAZÓN 3D
+// ======================================
+
+function create3DHeart() {
+
+    loveGroup = new THREE.Group();
+
+    for(let i = 0; i < 200; i++) {
+
+        // Elegir expresión
+        const phrase = lovePhrases[
+            Math.floor(Math.random() * lovePhrases.length)
+        ];
+
+        // Elegir tipografía
+        const font = loveFonts[i % loveFonts.length];
+
+        // Elegir color
+        const color = loveColors[
+            Math.floor(Math.random() * loveColors.length)
+        ];
+
+        // Crear textura
+        const texture = createLoveTexture(
+            phrase,
+            font,
+            color
+        );
+
+        const material = new THREE.SpriteMaterial({
+
+            map: texture,
+
+            transparent: true,
+
+            depthWrite: false,
+
+            blending: THREE.AdditiveBlending
+
+        });
+
+        const word = new THREE.Sprite(material);
+
+        // Posición del corazón
+        const position = getHeartPosition();
+
+        // Profundidad tridimensional
+        const z = (Math.random() - 0.5) * 2.2;
+
+        word.position.set(
+            position.x,
+            position.y,
+            z
+        );
+
+        // Diferentes tamaños
+        const size = 0.35 + Math.random() * 0.22;
+
+        const width = size * Math.max(
+            1.8,
+            Math.min(3.2, phrase.length * 0.16)
+        );
+
+        word.scale.set(
+            width,
+            size * 0.65,
+            1
+        );
+
+        // Inclinación aleatoria
+        word.material.rotation =
+            (Math.random() - 0.5) * 0.18;
+
+        loveGroup.add(word);
+
+    }
+
+    loveScene.add(loveGroup);
+
+}
+
+
+// ======================================
+// INICIALIZAR ESCENA 3D
+// ======================================
+
+async function initLove3D() {
+
+    if(loveAnimationStarted) {
+
+        resizeLove3D();
+
+        return;
+
+    }
+
+    const container = document.getElementById('loveHeart');
+
+    if(!window.THREE) {
+
+        container.innerHTML =
+            '<p>No se pudo cargar el motor 3D. Comprueba tu conexión a Internet.</p>';
+
+        return;
+
+    }
+
+    // Esperar a que se carguen las tipografías
+    if(document.fonts && document.fonts.ready) {
+
+        await document.fonts.ready;
+
+    }
+
+    loveScene = new THREE.Scene();
+
+    loveCamera = new THREE.PerspectiveCamera(
+
+        55,
+
+        container.clientWidth / container.clientHeight,
+
+        0.1,
+
+        100
+
+    );
+
+    loveCamera.position.z = 8;
+
+    loveRenderer = new THREE.WebGLRenderer({
+
+        alpha: true,
+
+        antialias: true
+
+    });
+
+    loveRenderer.setPixelRatio(
+
+        Math.min(window.devicePixelRatio, 2)
+
+    );
+
+    loveRenderer.setSize(
+
+        container.clientWidth,
+
+        container.clientHeight
+
+    );
+
+    container.appendChild(loveRenderer.domElement);
+
+
+    // Crear corazón
+    create3DHeart();
+
+
+    // ==================================
+    // ESTRELLAS DE FONDO
+    // ==================================
+
+    const starGeometry = new THREE.BufferGeometry();
+
+    const starPositions = [];
+
+    for(let i = 0; i < 700; i++) {
+
+        starPositions.push(
+
+            (Math.random() - 0.5) * 15,
+
+            (Math.random() - 0.5) * 12,
+
+            (Math.random() - 0.5) * 12
+
+        );
+
+    }
+
+    starGeometry.setAttribute(
+
+        'position',
+
+        new THREE.Float32BufferAttribute(
+            starPositions,
+            3
+        )
+
+    );
+
+    const starMaterial = new THREE.PointsMaterial({
+
+        color: '#ffb6d1',
+
+        size: 0.025,
+
+        transparent: true,
+
+        opacity: 0.65
+
+    });
+
+    const stars = new THREE.Points(
+
+        starGeometry,
+
+        starMaterial
+
+    );
+
+    loveScene.add(stars);
+
+
+    // ==================================
+    // CONTROLES DEL MOUSE
+    // ==================================
+
+    const canvas = loveRenderer.domElement;
+
+    canvas.addEventListener('pointerdown', (e) => {
+
+        isDragging = true;
+
+        previousX = e.clientX;
+        previousY = e.clientY;
+
+        canvas.setPointerCapture(e.pointerId);
+
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+
+        if(!isDragging) return;
+
+        const movementX = e.clientX - previousX;
+
+        const movementY = e.clientY - previousY;
+
+        targetY += movementX * 0.008;
+
+        targetX += movementY * 0.008;
+
+        previousX = e.clientX;
+
+        previousY = e.clientY;
+
+    });
+
+    canvas.addEventListener('pointerup', () => {
+
+        isDragging = false;
+
+    });
+
+    canvas.addEventListener('pointercancel', () => {
+
+        isDragging = false;
+
+    });
+
+
+    // ==================================
+    // ZOOM CON LA RUEDA DEL MOUSE
+    // ==================================
+
+    canvas.addEventListener('wheel', (e) => {
+
+        e.preventDefault();
+
+        loveCamera.position.z += e.deltaY * 0.004;
+
+        loveCamera.position.z = Math.max(
+
+            5,
+
+            Math.min(12, loveCamera.position.z)
+
+        );
+
+    }, { passive: false });
+
+
+    // Ajustar tamaño al cambiar pantalla
+    window.addEventListener('resize', resizeLove3D);
+
+    loveAnimationStarted = true;
+
+    animateLove3D();
+
+}
+
+
+// ======================================
+// REDIMENSIONAR ESCENA
+// ======================================
+
+function resizeLove3D() {
+
+    if(!loveRenderer) return;
+
+    const container = document.getElementById('loveHeart');
+
+    const width = container.clientWidth;
+
+    const height = container.clientHeight;
+
+    loveCamera.aspect = width / height;
+
+    loveCamera.updateProjectionMatrix();
+
+    loveRenderer.setSize(width, height);
+
+}
+
+
+// ======================================
+// ANIMACIÓN DEL CORAZÓN
+// ======================================
+
+function animateLove3D() {
+
+    requestAnimationFrame(animateLove3D);
+
+    if(!loveGroup) return;
+
+    // Rotación automática cuando no se mueve
+    if(!isDragging) {
+
+        targetY += 0.0015;
+
+    }
+
+    // Movimiento suave horizontal
+    loveGroup.rotation.y +=
+
+        (targetY - loveGroup.rotation.y) * 0.045;
+
+
+    // Movimiento suave vertical
+    loveGroup.rotation.x +=
+
+        (targetX - loveGroup.rotation.x) * 0.045;
+
+
+    loveRenderer.render(
+
+        loveScene,
+
+        loveCamera
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>
+
